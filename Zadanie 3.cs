@@ -24,7 +24,7 @@ namespace ZadanieB
         {
             if (!Zywy) return;                    // martwy generalnie nie powinien atakować i przyjmować obrażeń
 
-            uint nowe = Zycie.Aktualne > wielkosc ? Zycie.Aktualne - wielkosc : 0
+            uint nowe = Zycie.Aktualne > wielkosc ? Zycie.Aktualne - wielkosc : 0;
             Zycie = (nowe, Zycie.Maksymalne);
 
             if (Zycie.Aktualne == 0)
