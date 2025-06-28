@@ -1,15 +1,15 @@
 using System;
 using System.Collections.Generic;
 
-namespace OOP_ZadanieB
+namespace ZadanieB
 {
-    // === KLASY BAZOWE I POCHODNE ===
+    // Klasy;
     abstract class Stworzenie
     {
         public string Nazwa { get; }
         public bool Zywy { get; private set; } = true;
 
-        // tuple (Aktualne, Maksymalne) – zgodnie z treścią zadania
+        // Życie
         public (uint Aktualne, uint Maksymalne) Zycie { get; private set; }
 
         protected Stworzenie(string nazwa, uint zycieMaks)
@@ -22,11 +22,9 @@ namespace OOP_ZadanieB
 
         public void ZadajObrazenia(uint wielkosc)
         {
-            if (!Zywy) return;                    // martwy nie atakuje i nie przyjmuje obrażeń
+            if (!Zywy) return;                    // martwy generalnie nie powinien atakować i przyjmować obrażeń
 
-            // unikamy niedomiaru; stosujemy Math.Min zamiast własnych if-ów
-            uint utrata = Math.Min(wielkosc, Zycie.Aktualne);
-            Zycie = (Zycie.Aktualne - utrata, Zycie.Maksymalne);
+            // unikamy niedomiaru;
 
             if (Zycie.Aktualne == 0)
                 Zywy = false;
@@ -71,14 +69,14 @@ namespace OOP_ZadanieB
             Math.Max(Sila, Math.Max(Zrecznosc, Inteligencja));
     }
 
-    // === FUNKCJE POMOCNICZE ===
+    // Elementy dodatkowe
     static class Arena
     {
         // prosty „naprzemienny” pojedynek aż ktoś zginie
         public static Stworzenie Pojedynek(Stworzenie a, Stworzenie b)
         {
             bool turaA = true;
-            while (a.Zywy && b.Zywy)
+            while (a.Zywy & b.Zywy)
             {
                 if (turaA) b.ZadajObrazenia(a.ZadawaneObrazenia);
                 else        a.ZadajObrazenia(b.ZadawaneObrazenia);
@@ -87,7 +85,7 @@ namespace OOP_ZadanieB
             return a.Zywy ? a : b;
         }
 
-        // bardzo uproszczony turniej „drabinkowy”
+        // Turniej
         public static Stworzenie Turniej(params Stworzenie[] uczestnicy)
         {
             List<Stworzenie> runda = new List<Stworzenie>(uczestnicy);
@@ -110,7 +108,7 @@ namespace OOP_ZadanieB
                     zwyciezcy.Add(wygrany);
                 }
 
-                // drobne leczenie po rundzie
+                // Drobne leczenie HP po rundzie
                 foreach (var s in zwyciezcy)
                     s.Lecz(LEczenieMiedzyRundami);
 
@@ -121,7 +119,7 @@ namespace OOP_ZadanieB
         }
     }
 
-    // === PROGRAM TESTOWY ===
+    // Test;
     class Program
     {
         static void Main()
